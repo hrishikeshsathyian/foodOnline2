@@ -1,0 +1,9 @@
+
+{% extends 'base.html' %}
+{% block content %}
+    {{user.username}}
+    {{user.email}}
+    This is a VENDOR Dashboard
+    {{user.get_role}}
+    {% include 'includes/alerts.html'%}
+{% endblock %}
