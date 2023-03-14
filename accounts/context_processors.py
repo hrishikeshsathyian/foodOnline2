@@ -1,4 +1,5 @@
 from vendor.models import Vendor
+from foodOnline_main import settings
 
 
 def get_vendor(request):
@@ -8,3 +9,7 @@ def get_vendor(request):
         # in the event that there is no vendor to collect data from
         vendor = None
     return dict(vendor=vendor)
+
+
+def get_google_api(request):
+    return {'GOOGLE_API_KEY': settings.GOOGLE_API_KEY}
