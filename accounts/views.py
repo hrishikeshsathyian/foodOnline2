@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
+from django.template.defaultfilters import slugify
 # Create your views here.
 
 # Restrit the vendor from accessing the customer page
@@ -65,6 +66,7 @@ def registervendor(request):
             form = UserForm(request.POST)
             vendor_form = VendorForm(request.POST,request.FILES)
             if form.is_valid() and vendor_form.is_valid():
+                vendor_name = vendor_form.cleaned_data['vendor_name']
                 password = form.cleaned_data['password']
                 user = form.save(commit=False)
                 user.role = User.VENDOR
@@ -72,6 +74,7 @@ def registervendor(request):
                 user.save()
                 vendor = vendor_form.save(commit=False)
                 vendor.user = user
+                vendor.vendor_slug = slugify(vendor_name) + "-" + str(user.id)
                 user_profile = UserProfile.objects.get(user=user)
                 vendor.user_profile = user_profile
                 vendor.save()
