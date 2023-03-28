@@ -41,7 +41,11 @@
                                                 <span class="post-categories">
                                                     <small class="text-muted">{{vendor.user_profile.address}}</small>    
                                                 </span>
-                                                
+                                                <span>
+                                                    {% if vendor.kms %}
+                                                        {{vendor.kms}}km away from {{source_location}}
+                                                    {% endif %}
+                                                </span>
                                             </div>
                                             <div class="list-option">
 

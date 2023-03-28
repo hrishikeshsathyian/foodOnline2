@@ -20,11 +20,14 @@ def get_cart_price(request):
     cart_price = 0
     tax_amount = 0
     total = 0
-    cart_items = Cart.objects.filter(user=request.user)
-    for item in cart_items:
-        cart_price += item.fooditem.price*item.quantity
-    tax_amount = (2 * cart_price)//30
-    total = cart_price + tax_amount
+    try:
+        cart_items = Cart.objects.filter(user=request.user)
+        for item in cart_items:
+            cart_price += item.fooditem.price*item.quantity
+        tax_amount = (2 * cart_price)//30
+        total = cart_price + tax_amount
+    except:
+        pass
     print(cart_price)
     print(tax_amount)
     print(total)
