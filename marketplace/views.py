@@ -68,15 +68,23 @@ def add_to_cart(request,food_id):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 fooditem = FoodItem.objects.get(id=food_id)
+                print('check 1')
+                print(fooditem)
+                print(request.user)
+                
                 # Check if user has already added that food to the cart 
-                try:
+                if Cart.objects.filter(user=request.user,fooditem=fooditem).exists():
+                    print('check 1.4')
                     chkCart = Cart.objects.get(user=request.user,fooditem=fooditem)
+                    print('check 2')
                     # increase the cart quantity
+                    
                     chkCart.quantity += 1
                     chkCart.save()
                     return JsonResponse({'status':'Success','message':'Increase Cart quantity','cart_counter':get_cart_counter(request),'qty':chkCart.quantity,'price':get_cart_price(request)})
 
-                except:
+                else:
+                    print('check 3')
                     chkCart = Cart.objects.create(user=request.user,fooditem=fooditem,quantity=1)
                     return JsonResponse({'status':'Success','message':'Added the food to the cart','cart_counter':get_cart_counter(request),'qty':chkCart.quantity,'price':get_cart_price(request)})
 

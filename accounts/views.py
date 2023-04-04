@@ -147,6 +147,7 @@ def myaccount(request):
 @login_required(login_url="login")
 @user_passes_test(check_role_customer)
 def customerdashboard(request):
+    print(request.path)
     return render(request,"accounts/customerdashboard.html")
 
 @login_required(login_url="login")
